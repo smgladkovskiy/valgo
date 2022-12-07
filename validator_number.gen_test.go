@@ -434,6 +434,7 @@ func TestValidatorUint8InSliceInvalid(t *testing.T) {
 		v.Errors()["value_0"].Messages()[0])
 }
 
+
 func TestValidatorUint16Not(t *testing.T) {
 	t.Parallel()
 	require.NoError(t, TearUpTest(t))
@@ -858,6 +859,7 @@ func TestValidatorUint16InSliceInvalid(t *testing.T) {
 		"Value 0 is not valid",
 		v.Errors()["value_0"].Messages()[0])
 }
+
 
 func TestValidatorUint32Not(t *testing.T) {
 	t.Parallel()
@@ -1284,6 +1286,7 @@ func TestValidatorUint32InSliceInvalid(t *testing.T) {
 		v.Errors()["value_0"].Messages()[0])
 }
 
+
 func TestValidatorUint64Not(t *testing.T) {
 	t.Parallel()
 	require.NoError(t, TearUpTest(t))
@@ -1708,6 +1711,7 @@ func TestValidatorUint64InSliceInvalid(t *testing.T) {
 		"Value 0 is not valid",
 		v.Errors()["value_0"].Messages()[0])
 }
+
 
 func TestValidatorIntNot(t *testing.T) {
 	t.Parallel()
@@ -2134,6 +2138,7 @@ func TestValidatorIntInSliceInvalid(t *testing.T) {
 		v.Errors()["value_0"].Messages()[0])
 }
 
+
 func TestValidatorInt8Not(t *testing.T) {
 	t.Parallel()
 	require.NoError(t, TearUpTest(t))
@@ -2558,6 +2563,7 @@ func TestValidatorInt8InSliceInvalid(t *testing.T) {
 		"Value 0 is not valid",
 		v.Errors()["value_0"].Messages()[0])
 }
+
 
 func TestValidatorInt16Not(t *testing.T) {
 	t.Parallel()
@@ -2984,6 +2990,7 @@ func TestValidatorInt16InSliceInvalid(t *testing.T) {
 		v.Errors()["value_0"].Messages()[0])
 }
 
+
 func TestValidatorInt32Not(t *testing.T) {
 	t.Parallel()
 	require.NoError(t, TearUpTest(t))
@@ -3408,6 +3415,7 @@ func TestValidatorInt32InSliceInvalid(t *testing.T) {
 		"Value 0 is not valid",
 		v.Errors()["value_0"].Messages()[0])
 }
+
 
 func TestValidatorInt64Not(t *testing.T) {
 	t.Parallel()
@@ -3834,6 +3842,7 @@ func TestValidatorInt64InSliceInvalid(t *testing.T) {
 		v.Errors()["value_0"].Messages()[0])
 }
 
+
 func TestValidatorFloat32Not(t *testing.T) {
 	t.Parallel()
 	require.NoError(t, TearUpTest(t))
@@ -4258,6 +4267,7 @@ func TestValidatorFloat32InSliceInvalid(t *testing.T) {
 		"Value 0 is not valid",
 		v.Errors()["value_0"].Messages()[0])
 }
+
 
 func TestValidatorFloat64Not(t *testing.T) {
 	t.Parallel()
@@ -4684,6 +4694,7 @@ func TestValidatorFloat64InSliceInvalid(t *testing.T) {
 		v.Errors()["value_0"].Messages()[0])
 }
 
+
 func TestValidatorByteNot(t *testing.T) {
 	t.Parallel()
 	require.NoError(t, TearUpTest(t))
@@ -5109,6 +5120,7 @@ func TestValidatorByteInSliceInvalid(t *testing.T) {
 		v.Errors()["value_0"].Messages()[0])
 }
 
+
 func TestValidatorRuneNot(t *testing.T) {
 	t.Parallel()
 	require.NoError(t, TearUpTest(t))
@@ -5533,3 +5545,4 @@ func TestValidatorRuneInSliceInvalid(t *testing.T) {
 		"Value 0 is not valid",
 		v.Errors()["value_0"].Messages()[0])
 }
+

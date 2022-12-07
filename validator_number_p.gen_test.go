@@ -652,6 +652,7 @@ func TestValidatorUint8PNilIsInvalid(t *testing.T) {
 		v.Errors()["value_0"].Messages()[0])
 }
 
+
 func TestValidatorUint16PNot(t *testing.T) {
 	t.Parallel()
 	require.NoError(t, TearUpTest(t))
@@ -1294,6 +1295,7 @@ func TestValidatorUint16PNilIsInvalid(t *testing.T) {
 		"Value 0 must be nil",
 		v.Errors()["value_0"].Messages()[0])
 }
+
 
 func TestValidatorUint32PNot(t *testing.T) {
 	t.Parallel()
@@ -1938,6 +1940,7 @@ func TestValidatorUint32PNilIsInvalid(t *testing.T) {
 		v.Errors()["value_0"].Messages()[0])
 }
 
+
 func TestValidatorUint64PNot(t *testing.T) {
 	t.Parallel()
 	require.NoError(t, TearUpTest(t))
@@ -2580,6 +2583,7 @@ func TestValidatorUint64PNilIsInvalid(t *testing.T) {
 		"Value 0 must be nil",
 		v.Errors()["value_0"].Messages()[0])
 }
+
 
 func TestValidatorIntPNot(t *testing.T) {
 	t.Parallel()
@@ -3224,6 +3228,7 @@ func TestValidatorIntPNilIsInvalid(t *testing.T) {
 		v.Errors()["value_0"].Messages()[0])
 }
 
+
 func TestValidatorInt8PNot(t *testing.T) {
 	t.Parallel()
 	require.NoError(t, TearUpTest(t))
@@ -3866,6 +3871,7 @@ func TestValidatorInt8PNilIsInvalid(t *testing.T) {
 		"Value 0 must be nil",
 		v.Errors()["value_0"].Messages()[0])
 }
+
 
 func TestValidatorInt16PNot(t *testing.T) {
 	t.Parallel()
@@ -4510,6 +4516,7 @@ func TestValidatorInt16PNilIsInvalid(t *testing.T) {
 		v.Errors()["value_0"].Messages()[0])
 }
 
+
 func TestValidatorInt32PNot(t *testing.T) {
 	t.Parallel()
 	require.NoError(t, TearUpTest(t))
@@ -5152,6 +5159,7 @@ func TestValidatorInt32PNilIsInvalid(t *testing.T) {
 		"Value 0 must be nil",
 		v.Errors()["value_0"].Messages()[0])
 }
+
 
 func TestValidatorInt64PNot(t *testing.T) {
 	t.Parallel()
@@ -5796,6 +5804,7 @@ func TestValidatorInt64PNilIsInvalid(t *testing.T) {
 		v.Errors()["value_0"].Messages()[0])
 }
 
+
 func TestValidatorFloat32PNot(t *testing.T) {
 	t.Parallel()
 	require.NoError(t, TearUpTest(t))
@@ -6438,6 +6447,7 @@ func TestValidatorFloat32PNilIsInvalid(t *testing.T) {
 		"Value 0 must be nil",
 		v.Errors()["value_0"].Messages()[0])
 }
+
 
 func TestValidatorFloat64PNot(t *testing.T) {
 	t.Parallel()
@@ -7082,6 +7092,7 @@ func TestValidatorFloat64PNilIsInvalid(t *testing.T) {
 		v.Errors()["value_0"].Messages()[0])
 }
 
+
 func TestValidatorBytePNot(t *testing.T) {
 	t.Parallel()
 	require.NoError(t, TearUpTest(t))
@@ -7725,6 +7736,7 @@ func TestValidatorBytePNilIsInvalid(t *testing.T) {
 		v.Errors()["value_0"].Messages()[0])
 }
 
+
 func TestValidatorRunePNot(t *testing.T) {
 	t.Parallel()
 	require.NoError(t, TearUpTest(t))
@@ -8367,3 +8379,4 @@ func TestValidatorRunePNilIsInvalid(t *testing.T) {
 		"Value 0 must be nil",
 		v.Errors()["value_0"].Messages()[0])
 }
+

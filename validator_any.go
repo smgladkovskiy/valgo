@@ -14,7 +14,7 @@ type ValidatorAny struct {
 // The value can be any type;
 //
 // Optionally, the function can receive a name and title, in that order, to be
-// displayed in the error messages. A value_%N` pattern is used as a name in the
+// displayed in the error messages. A value_%N pattern is used as a name in the
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
 // used as the title as well; for example the name phone_number will be
@@ -32,7 +32,7 @@ func (validator *ValidatorAny) Context() *ValidatorContext {
 // Not Invert the logical value associated with the next validator function.
 // For example:
 //
-//	// It will return false because `Not()` inverts the boolean value associated with the `Equal()` function
+//	// It will return false because Not() inverts the boolean value associated with the Equal() function
 //	Is(v.Any("a").Not().Equal("a")).Valid()
 func (validator *ValidatorAny) Not() *ValidatorAny {
 	validator.context.Not()
@@ -41,7 +41,7 @@ func (validator *ValidatorAny) Not() *ValidatorAny {
 }
 
 // EqualTo Validate if a value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	status := "running"

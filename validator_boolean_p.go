@@ -7,14 +7,14 @@ type ValidatorBoolP[T ~bool] struct {
 
 // BoolP Receives a boolean pointer to validate.
 //
-// The value also can be a custom boolean type such as `type Active bool;`
+// The value also can be a custom boolean type such as "type Active bool;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0. When the name is
 // provided but not the title, then the name is humanized to be used as the
-// title as well; for example the name `phone_number` will be humanized as
-// `Phone Number`.
+// title as well; for example the name phone_number will be humanized as
+// "Phone Number".
 func BoolP[T ~bool](value *T, nameAndTitle ...string) *ValidatorBoolP[T] {
 	return &ValidatorBoolP[T]{context: NewContext(value, nameAndTitle...)}
 }

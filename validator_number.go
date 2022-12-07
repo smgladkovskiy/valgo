@@ -31,14 +31,14 @@ type ValidatorNumber[T TypeNumber] struct {
 // Number Receives a numeric value to validate.
 //
 // The value can be any golang numeric type (int64, int32, float32, uint,
-// etc.) or a custom numeric type such as `type Level int32;`
+// etc.) or a custom numeric type such as "type Level int32;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Number`.
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Number".
 func Number[T TypeNumber](value T, nameAndTitle ...string) *ValidatorNumber[T] {
 	return &ValidatorNumber[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -61,7 +61,7 @@ func (validator *ValidatorNumber[T]) Not() *ValidatorNumber[T] {
 }
 
 // EqualTo Validate if a numeric value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := 2
@@ -82,7 +82,7 @@ func (validator *ValidatorNumber[T]) EqualTo(value T, template ...string) *Valid
 }
 
 // GreaterThan Validate if a numeric value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := 3
@@ -103,7 +103,7 @@ func (validator *ValidatorNumber[T]) GreaterThan(value T, template ...string) *V
 }
 
 // GreaterOrEqualTo Validate if a numeric value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := 3
@@ -124,7 +124,7 @@ func (validator *ValidatorNumber[T]) GreaterOrEqualTo(value T, template ...strin
 }
 
 // LessThan Validate if a numeric value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := 2
@@ -145,7 +145,7 @@ func (validator *ValidatorNumber[T]) LessThan(value T, template ...string) *Vali
 }
 
 // LessOrEqualTo Validate if a numeric value is less than or equal to another. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := 2

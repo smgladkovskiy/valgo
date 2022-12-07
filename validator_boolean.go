@@ -7,14 +7,14 @@ type ValidatorBool[T ~bool] struct {
 
 // Bool Receives a boolean value to validate.
 //
-// The value also can be a custom boolean type such as `type Active bool;`
+// The value also can be a custom boolean type such as "type Active bool;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0. When the name is
 // provided but not the title, then the name is humanized to be used as the
-// title as well; for example the name `phone_number` will be humanized as
-// `Phone Number`.
+// title as well; for example the name phone_number will be humanized as
+// "Phone Number".
 func Bool[T ~bool](value T, nameAndTitle ...string) *ValidatorBool[T] {
 	return &ValidatorBool[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -28,7 +28,7 @@ func (validator *ValidatorBool[T]) Context() *ValidatorContext {
 // Not Invert the boolean value associated with the next validator function.
 // For example:
 //
-//	// It will return false because `Not()` inverts the boolean value associated with the True() function
+//	// It will return false because Not() inverts the boolean value associated with the True() function
 //	Is(v.Bool(true).Not().True()).Valid()
 func (validator *ValidatorBool[T]) Not() *ValidatorBool[T] {
 	validator.context.Not()

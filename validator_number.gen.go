@@ -8,14 +8,14 @@ type ValidatorUint8[T ~uint8] struct {
 
 // Uint8 Receives the uint8 value to validate.
 //
-// The value also can be a custom uint8 type such as `type Level uint8;`
+// The value also can be a custom uint8 type such as "type Level uint8;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Uint8`
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Uint8"
 func Uint8[T ~uint8](value T, nameAndTitle ...string) *ValidatorUint8[T] {
 	return &ValidatorUint8[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -38,7 +38,7 @@ func (validator *ValidatorUint8[T]) Not() *ValidatorUint8[T] {
 }
 
 // EqualTo Validate if the uint8 value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := uint8(2)
@@ -59,7 +59,7 @@ func (validator *ValidatorUint8[T]) EqualTo(value T, template ...string) *Valida
 }
 
 // GreaterThan Validate if the uint8 value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := uint8(3)
@@ -80,7 +80,7 @@ func (validator *ValidatorUint8[T]) GreaterThan(value T, template ...string) *Va
 }
 
 // GreaterOrEqualTo Validate if the uint8 value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := uint8(3)
@@ -101,7 +101,7 @@ func (validator *ValidatorUint8[T]) GreaterOrEqualTo(value T, template ...string
 }
 
 // LessThan Validate if the uint8 value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := uint8(2)
@@ -122,7 +122,7 @@ func (validator *ValidatorUint8[T]) LessThan(value T, template ...string) *Valid
 }
 
 // LessOrEqualTo Validate if the uint8 value is less than or equal to another. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := uint8(2)
@@ -264,14 +264,14 @@ type ValidatorUint16[T ~uint16] struct {
 
 // Uint16 Receives the uint16 value to validate.
 //
-// The value also can be a custom uint16 type such as `type Level uint16;`
+// The value also can be a custom uint16 type such as "type Level uint16;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Uint16`
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Uint16"
 func Uint16[T ~uint16](value T, nameAndTitle ...string) *ValidatorUint16[T] {
 	return &ValidatorUint16[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -294,7 +294,7 @@ func (validator *ValidatorUint16[T]) Not() *ValidatorUint16[T] {
 }
 
 // EqualTo Validate if the uint16 value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := uint16(2)
@@ -315,7 +315,7 @@ func (validator *ValidatorUint16[T]) EqualTo(value T, template ...string) *Valid
 }
 
 // GreaterThan Validate if the uint16 value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := uint16(3)
@@ -336,7 +336,7 @@ func (validator *ValidatorUint16[T]) GreaterThan(value T, template ...string) *V
 }
 
 // GreaterOrEqualTo Validate if the uint16 value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := uint16(3)
@@ -357,7 +357,7 @@ func (validator *ValidatorUint16[T]) GreaterOrEqualTo(value T, template ...strin
 }
 
 // LessThan Validate if the uint16 value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := uint16(2)
@@ -378,7 +378,7 @@ func (validator *ValidatorUint16[T]) LessThan(value T, template ...string) *Vali
 }
 
 // LessOrEqualTo Validate if the uint16 value is less than or equal to another. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := uint16(2)
@@ -520,14 +520,14 @@ type ValidatorUint32[T ~uint32] struct {
 
 // Uint32 Receives the uint32 value to validate.
 //
-// The value also can be a custom uint32 type such as `type Level uint32;`
+// The value also can be a custom uint32 type such as "type Level uint32;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Uint32`
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Uint32"
 func Uint32[T ~uint32](value T, nameAndTitle ...string) *ValidatorUint32[T] {
 	return &ValidatorUint32[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -550,7 +550,7 @@ func (validator *ValidatorUint32[T]) Not() *ValidatorUint32[T] {
 }
 
 // EqualTo Validate if the uint32 value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := uint32(2)
@@ -571,7 +571,7 @@ func (validator *ValidatorUint32[T]) EqualTo(value T, template ...string) *Valid
 }
 
 // GreaterThan Validate if the uint32 value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := uint32(3)
@@ -592,7 +592,7 @@ func (validator *ValidatorUint32[T]) GreaterThan(value T, template ...string) *V
 }
 
 // GreaterOrEqualTo Validate if the uint32 value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := uint32(3)
@@ -613,7 +613,7 @@ func (validator *ValidatorUint32[T]) GreaterOrEqualTo(value T, template ...strin
 }
 
 // LessThan Validate if the uint32 value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := uint32(2)
@@ -634,7 +634,7 @@ func (validator *ValidatorUint32[T]) LessThan(value T, template ...string) *Vali
 }
 
 // LessOrEqualTo Validate if the uint32 value is less than or equal to another. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := uint32(2)
@@ -776,14 +776,14 @@ type ValidatorUint64[T ~uint64] struct {
 
 // Uint64 Receives the uint64 value to validate.
 //
-// The value also can be a custom uint64 type such as `type Level uint64;`
+// The value also can be a custom uint64 type such as "type Level uint64;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Uint64`
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Uint64"
 func Uint64[T ~uint64](value T, nameAndTitle ...string) *ValidatorUint64[T] {
 	return &ValidatorUint64[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -806,7 +806,7 @@ func (validator *ValidatorUint64[T]) Not() *ValidatorUint64[T] {
 }
 
 // EqualTo Validate if the uint64 value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := uint64(2)
@@ -827,7 +827,7 @@ func (validator *ValidatorUint64[T]) EqualTo(value T, template ...string) *Valid
 }
 
 // GreaterThan Validate if the uint64 value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := uint64(3)
@@ -848,7 +848,7 @@ func (validator *ValidatorUint64[T]) GreaterThan(value T, template ...string) *V
 }
 
 // GreaterOrEqualTo Validate if the uint64 value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := uint64(3)
@@ -869,7 +869,7 @@ func (validator *ValidatorUint64[T]) GreaterOrEqualTo(value T, template ...strin
 }
 
 // LessThan Validate if the uint64 value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := uint64(2)
@@ -890,7 +890,7 @@ func (validator *ValidatorUint64[T]) LessThan(value T, template ...string) *Vali
 }
 
 // LessOrEqualTo Validate if the uint64 value is less than or equal to another. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := uint64(2)
@@ -1032,14 +1032,14 @@ type ValidatorInt[T ~int] struct {
 
 // Int Receives the int value to validate.
 //
-// The value also can be a custom int type such as `type Level int;`
+// The value also can be a custom int type such as "type Level int;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Int`
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Int"
 func Int[T ~int](value T, nameAndTitle ...string) *ValidatorInt[T] {
 	return &ValidatorInt[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -1062,7 +1062,7 @@ func (validator *ValidatorInt[T]) Not() *ValidatorInt[T] {
 }
 
 // EqualTo Validate if the int value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := int(2)
@@ -1083,7 +1083,7 @@ func (validator *ValidatorInt[T]) EqualTo(value T, template ...string) *Validato
 }
 
 // GreaterThan Validate if the int value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := int(3)
@@ -1104,7 +1104,7 @@ func (validator *ValidatorInt[T]) GreaterThan(value T, template ...string) *Vali
 }
 
 // GreaterOrEqualTo Validate if the int value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := int(3)
@@ -1125,7 +1125,7 @@ func (validator *ValidatorInt[T]) GreaterOrEqualTo(value T, template ...string) 
 }
 
 // LessThan Validate if the int value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := int(2)
@@ -1146,7 +1146,7 @@ func (validator *ValidatorInt[T]) LessThan(value T, template ...string) *Validat
 }
 
 // LessOrEqualTo Validate if the int value is less than or equal to another. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := int(2)
@@ -1288,14 +1288,14 @@ type ValidatorInt8[T ~int8] struct {
 
 // Int8 Receives the int8 value to validate.
 //
-// The value also can be a custom int8 type such as `type Level int8;`
+// The value also can be a custom int8 type such as "type Level int8;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Int8`
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Int8"
 func Int8[T ~int8](value T, nameAndTitle ...string) *ValidatorInt8[T] {
 	return &ValidatorInt8[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -1318,7 +1318,7 @@ func (validator *ValidatorInt8[T]) Not() *ValidatorInt8[T] {
 }
 
 // EqualTo Validate if the int8 value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := int8(2)
@@ -1339,7 +1339,7 @@ func (validator *ValidatorInt8[T]) EqualTo(value T, template ...string) *Validat
 }
 
 // GreaterThan Validate if the int8 value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := int8(3)
@@ -1360,7 +1360,7 @@ func (validator *ValidatorInt8[T]) GreaterThan(value T, template ...string) *Val
 }
 
 // GreaterOrEqualTo Validate if the int8 value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := int8(3)
@@ -1381,7 +1381,7 @@ func (validator *ValidatorInt8[T]) GreaterOrEqualTo(value T, template ...string)
 }
 
 // LessThan Validate if the int8 value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := int8(2)
@@ -1402,7 +1402,7 @@ func (validator *ValidatorInt8[T]) LessThan(value T, template ...string) *Valida
 }
 
 // LessOrEqualTo Validate if the int8 value is less than or equal to another. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := int8(2)
@@ -1544,14 +1544,14 @@ type ValidatorInt16[T ~int16] struct {
 
 // Int16 Receives the int16 value to validate.
 //
-// The value also can be a custom int16 type such as `type Level int16;`
+// The value also can be a custom int16 type such as "type Level int16;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Int16`
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Int16"
 func Int16[T ~int16](value T, nameAndTitle ...string) *ValidatorInt16[T] {
 	return &ValidatorInt16[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -1574,7 +1574,7 @@ func (validator *ValidatorInt16[T]) Not() *ValidatorInt16[T] {
 }
 
 // EqualTo Validate if the int16 value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := int16(2)
@@ -1595,7 +1595,7 @@ func (validator *ValidatorInt16[T]) EqualTo(value T, template ...string) *Valida
 }
 
 // GreaterThan Validate if the int16 value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := int16(3)
@@ -1616,7 +1616,7 @@ func (validator *ValidatorInt16[T]) GreaterThan(value T, template ...string) *Va
 }
 
 // GreaterOrEqualTo Validate if the int16 value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := int16(3)
@@ -1637,7 +1637,7 @@ func (validator *ValidatorInt16[T]) GreaterOrEqualTo(value T, template ...string
 }
 
 // LessThan Validate if the int16 value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := int16(2)
@@ -1658,7 +1658,7 @@ func (validator *ValidatorInt16[T]) LessThan(value T, template ...string) *Valid
 }
 
 // LessOrEqualTo Validate if the int16 value is less than or equal to another. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := int16(2)
@@ -1800,14 +1800,14 @@ type ValidatorInt32[T ~int32] struct {
 
 // Int32 Receives the int32 value to validate.
 //
-// The value also can be a custom int32 type such as `type Level int32;`
+// The value also can be a custom int32 type such as "type Level int32;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Int32`
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Int32"
 func Int32[T ~int32](value T, nameAndTitle ...string) *ValidatorInt32[T] {
 	return &ValidatorInt32[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -1830,7 +1830,7 @@ func (validator *ValidatorInt32[T]) Not() *ValidatorInt32[T] {
 }
 
 // EqualTo Validate if the int32 value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := int32(2)
@@ -1851,7 +1851,7 @@ func (validator *ValidatorInt32[T]) EqualTo(value T, template ...string) *Valida
 }
 
 // GreaterThan Validate if the int32 value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := int32(3)
@@ -1872,7 +1872,7 @@ func (validator *ValidatorInt32[T]) GreaterThan(value T, template ...string) *Va
 }
 
 // GreaterOrEqualTo Validate if the int32 value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := int32(3)
@@ -1893,7 +1893,7 @@ func (validator *ValidatorInt32[T]) GreaterOrEqualTo(value T, template ...string
 }
 
 // LessThan Validate if the int32 value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := int32(2)
@@ -1914,7 +1914,7 @@ func (validator *ValidatorInt32[T]) LessThan(value T, template ...string) *Valid
 }
 
 // LessOrEqualTo Validate if the int32 value is less than or equal to another. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := int32(2)
@@ -2056,14 +2056,14 @@ type ValidatorInt64[T ~int64] struct {
 
 // Int64 Receives the int64 value to validate.
 //
-// The value also can be a custom int64 type such as `type Level int64;`
+// The value also can be a custom int64 type such as "type Level int64;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Int64`
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Int64"
 func Int64[T ~int64](value T, nameAndTitle ...string) *ValidatorInt64[T] {
 	return &ValidatorInt64[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -2086,7 +2086,7 @@ func (validator *ValidatorInt64[T]) Not() *ValidatorInt64[T] {
 }
 
 // EqualTo Validate if the int64 value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := int64(2)
@@ -2107,7 +2107,7 @@ func (validator *ValidatorInt64[T]) EqualTo(value T, template ...string) *Valida
 }
 
 // GreaterThan Validate if the int64 value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := int64(3)
@@ -2128,7 +2128,7 @@ func (validator *ValidatorInt64[T]) GreaterThan(value T, template ...string) *Va
 }
 
 // GreaterOrEqualTo Validate if the int64 value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := int64(3)
@@ -2149,7 +2149,7 @@ func (validator *ValidatorInt64[T]) GreaterOrEqualTo(value T, template ...string
 }
 
 // LessThan Validate if the int64 value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := int64(2)
@@ -2170,7 +2170,7 @@ func (validator *ValidatorInt64[T]) LessThan(value T, template ...string) *Valid
 }
 
 // LessOrEqualTo Validate if the int64 value is less than or equal to another. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := int64(2)
@@ -2312,14 +2312,14 @@ type ValidatorFloat32[T ~float32] struct {
 
 // Float32 Receives the float32 value to validate.
 //
-// The value also can be a custom float32 type such as `type Level float32;`
+// The value also can be a custom float32 type such as "type Level float32;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Float32`
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Float32"
 func Float32[T ~float32](value T, nameAndTitle ...string) *ValidatorFloat32[T] {
 	return &ValidatorFloat32[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -2342,7 +2342,7 @@ func (validator *ValidatorFloat32[T]) Not() *ValidatorFloat32[T] {
 }
 
 // EqualTo Validate if the float32 value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := float32(2)
@@ -2363,7 +2363,7 @@ func (validator *ValidatorFloat32[T]) EqualTo(value T, template ...string) *Vali
 }
 
 // GreaterThan Validate if the float32 value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := float32(3)
@@ -2384,7 +2384,7 @@ func (validator *ValidatorFloat32[T]) GreaterThan(value T, template ...string) *
 }
 
 // GreaterOrEqualTo Validate if the float32 value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := float32(3)
@@ -2405,7 +2405,7 @@ func (validator *ValidatorFloat32[T]) GreaterOrEqualTo(value T, template ...stri
 }
 
 // LessThan Validate if the float32 value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := float32(2)
@@ -2426,7 +2426,7 @@ func (validator *ValidatorFloat32[T]) LessThan(value T, template ...string) *Val
 }
 
 // LessOrEqualTo Validate if the float32 value is less than or equal to another. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := float32(2)
@@ -2568,14 +2568,14 @@ type ValidatorFloat64[T ~float64] struct {
 
 // Float64 Receives the float64 value to validate.
 //
-// The value also can be a custom float64 type such as `type Level float64;`
+// The value also can be a custom float64 type such as "type Level float64;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Float64`
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Float64"
 func Float64[T ~float64](value T, nameAndTitle ...string) *ValidatorFloat64[T] {
 	return &ValidatorFloat64[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -2598,7 +2598,7 @@ func (validator *ValidatorFloat64[T]) Not() *ValidatorFloat64[T] {
 }
 
 // EqualTo Validate if the float64 value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := float64(2)
@@ -2619,7 +2619,7 @@ func (validator *ValidatorFloat64[T]) EqualTo(value T, template ...string) *Vali
 }
 
 // GreaterThan Validate if the float64 value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := float64(3)
@@ -2640,7 +2640,7 @@ func (validator *ValidatorFloat64[T]) GreaterThan(value T, template ...string) *
 }
 
 // GreaterOrEqualTo Validate if the float64 value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := float64(3)
@@ -2661,7 +2661,7 @@ func (validator *ValidatorFloat64[T]) GreaterOrEqualTo(value T, template ...stri
 }
 
 // LessThan Validate if the float64 value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := float64(2)
@@ -2682,7 +2682,7 @@ func (validator *ValidatorFloat64[T]) LessThan(value T, template ...string) *Val
 }
 
 // LessOrEqualTo Validate if the float64 value is less than or equal to another. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := float64(2)
@@ -2824,14 +2824,14 @@ type ValidatorByte[T ~byte] struct {
 
 // Byte Receives the byte value to validate.
 //
-// The value also can be a custom byte type such as `type Level byte;`
+// The value also can be a custom byte type such as "type Level byte;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Byte`
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Byte"
 func Byte[T ~byte](value T, nameAndTitle ...string) *ValidatorByte[T] {
 	return &ValidatorByte[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -2854,7 +2854,7 @@ func (validator *ValidatorByte[T]) Not() *ValidatorByte[T] {
 }
 
 // EqualTo Validate if the byte value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := byte(2)
@@ -2875,7 +2875,7 @@ func (validator *ValidatorByte[T]) EqualTo(value T, template ...string) *Validat
 }
 
 // GreaterThan Validate if the byte value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := byte(3)
@@ -2896,7 +2896,7 @@ func (validator *ValidatorByte[T]) GreaterThan(value T, template ...string) *Val
 }
 
 // GreaterOrEqualTo Validate if the byte value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := byte(3)
@@ -2917,7 +2917,7 @@ func (validator *ValidatorByte[T]) GreaterOrEqualTo(value T, template ...string)
 }
 
 // LessThan Validate if the byte value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := byte(2)
@@ -2938,7 +2938,7 @@ func (validator *ValidatorByte[T]) LessThan(value T, template ...string) *Valida
 }
 
 // LessOrEqualTo Validate if the byte value is less than or equal to another. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := byte(2)
@@ -3080,14 +3080,14 @@ type ValidatorRune[T ~rune] struct {
 
 // Rune Receives the rune value to validate.
 //
-// The value also can be a custom rune type such as `type Level rune;`
+// The value also can be a custom rune type such as "type Level rune;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N“ pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Rune`
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Rune"
 func Rune[T ~rune](value T, nameAndTitle ...string) *ValidatorRune[T] {
 	return &ValidatorRune[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -3110,7 +3110,7 @@ func (validator *ValidatorRune[T]) Not() *ValidatorRune[T] {
 }
 
 // EqualTo Validate if the rune value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := rune(2)
@@ -3131,7 +3131,7 @@ func (validator *ValidatorRune[T]) EqualTo(value T, template ...string) *Validat
 }
 
 // GreaterThan Validate if the rune value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := rune(3)
@@ -3152,7 +3152,7 @@ func (validator *ValidatorRune[T]) GreaterThan(value T, template ...string) *Val
 }
 
 // GreaterOrEqualTo Validate if the rune value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := rune(3)
@@ -3173,7 +3173,7 @@ func (validator *ValidatorRune[T]) GreaterOrEqualTo(value T, template ...string)
 }
 
 // LessThan Validate if the rune value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := rune(2)
@@ -3194,7 +3194,7 @@ func (validator *ValidatorRune[T]) LessThan(value T, template ...string) *Valida
 }
 
 // LessOrEqualTo Validate if the rune value is less than or equal to another. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := rune(2)

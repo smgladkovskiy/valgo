@@ -68,7 +68,7 @@ func InRow(name string, index int, v *Validation) *Validation {
 }
 
 // Check The [Check](...) function, similar to the [Is](...) function, however with
-// [Check](...)` the Rules of the [Validator] parameter are not short-circuited,
+// [Check](...) the Rules of the [Validator] parameter are not short-circuited,
 // which means that regardless of whether a previous rule was valid, all rules
 // are checked.
 //

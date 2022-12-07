@@ -11,14 +11,14 @@ type ValidatorStringP[T ~string] struct {
 
 // StringP Receives a string pointer to validate.
 //
-// The value also can be a custom boolean type such as `type Status *string;`
+// The value also can be a custom boolean type such as "type Status *string;"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be used in the error messages. A `value_%N“ pattern is used as a name in
+// to be used in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Number`.
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Number".
 func StringP[T ~string](value *T, nameAndTitle ...string) *ValidatorStringP[T] {
 	return &ValidatorStringP[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -62,7 +62,7 @@ func (validator *ValidatorStringP[T]) EqualTo(value T, template ...string) *Vali
 }
 
 // GreaterThan Validate if a string value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	section := "bb"
@@ -83,7 +83,7 @@ func (validator *ValidatorStringP[T]) GreaterThan(value T, template ...string) *
 }
 
 // GreaterOrEqualTo Validate if a string value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	section := "bc"
@@ -104,7 +104,7 @@ func (validator *ValidatorStringP[T]) GreaterOrEqualTo(value T, template ...stri
 }
 
 // LessThan Validate if a string value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	section := "bb"
@@ -125,7 +125,7 @@ func (validator *ValidatorStringP[T]) LessThan(value T, template ...string) *Val
 }
 
 // LessOrEqualTo Validate if a string value is less or equal to another. This function
-// internally uses the golang `<=` operator to compare two strings.
+// internally uses the golang <= operator to compare two strings.
 // For example:
 //
 //	section := "bc"
@@ -147,7 +147,7 @@ func (validator *ValidatorStringP[T]) LessOrEqualTo(value T, template ...string)
 
 // Empty Validate if a string value is empty. Empty will be false if the length
 // of the string is greater than zero, even if the string has only spaces.
-// For checking if the string has only spaces, uses the function `Blank()`
+// For checking if the string has only spaces, uses the function Blank()
 // instead.
 // For example:
 //
@@ -172,7 +172,7 @@ func (validator *ValidatorStringP[T]) Empty(template ...string) *ValidatorString
 
 // EmptyOrNil Validate if a string value is empty or nil. Empty will be false if the length
 // of the string is greater than zero, even if the string has only spaces.
-// For checking if the string has only spaces, uses the function `BlankOrNil()`
+// For checking if the string has only spaces, uses the function BlankOrNil()
 // instead.
 // For example:
 //

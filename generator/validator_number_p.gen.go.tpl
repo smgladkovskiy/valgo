@@ -8,14 +8,14 @@ type Validator{{ .Name }}P[T ~{{ .Type }}] struct {
 
 // Receives the {{ .Type }} pointer to validate.
 //
-// The value also can be a custom {{ .Type }} type such as `type Level *{{ .Type }};`
+// The value also can be a custom {{ .Type }} type such as "type Level *{{ .Type }};"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be used in the error messages. A `value_%N“ pattern is used as a name in
+// to be used in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone Number`
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone Number"
 func {{ .Name }}P[T ~{{ .Type }}](value *T, nameAndTitle ...string) *Validator{{ .Name }}P[T] {
 	return &Validator{{ .Name }}P[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -39,7 +39,7 @@ func (validator *Validator{{ .Name }}P[T]) Not() *Validator{{ .Name }}P[T] {
 }
 
 // Validate if the {{ .Type }} pointer value is equal to another value. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := {{ .Type }}(2)
@@ -60,7 +60,7 @@ func (validator *Validator{{ .Name }}P[T]) EqualTo(value T, template ...string) 
 }
 
 // Validate if the {{ .Type }} pointer value is greater than another value. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := {{ .Type }}(3)
@@ -81,7 +81,7 @@ func (validator *Validator{{ .Name }}P[T]) GreaterThan(value T, template ...stri
 }
 
 // Validate if the {{ .Type }} pointer value is greater than or equal to another value. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := {{ .Type }}(3)
@@ -102,7 +102,7 @@ func (validator *Validator{{ .Name }}P[T]) GreaterOrEqualTo(value T, template ..
 }
 
 // Validate if the {{ .Type }} pointer value is less than another value. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := {{ .Type }}(2)
@@ -123,7 +123,7 @@ func (validator *Validator{{ .Name }}P[T]) LessThan(value T, template ...string)
 }
 
 // Validate if the {{ .Type }} pointer value is less than or equal to another value. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := {{ .Type }}(2)

@@ -8,14 +8,14 @@ type Validator{{ .Name }}[T ~{{ .Type }}] struct {
 
 // {{ .Name }} Receives the {{ .Type }} value to validate.
 //
-// The value also can be a custom {{ .Type }} type such as `type Level {{ .Type }};`
+// The value also can be a custom {{ .Type }} type such as "type Level {{ .Type }};"
 //
 // Optionally, the function can receive a name and title, in that order,
-// to be displayed in the error messages. A `value_%N`` pattern is used as a name in
+// to be displayed in the error messages. A value_%N pattern is used as a name in
 // error messages if a name and title are not supplied; for example: value_0.
 // When the name is provided but not the title, then the name is humanized to be
-// used as the title as well; for example the name `phone_number` will be
-// humanized as `Phone {{ .Name }}`
+// used as the title as well; for example the name phone_number will be
+// humanized as "Phone {{ .Name }}"
 func {{ .Name }}[T ~{{ .Type }}](value T, nameAndTitle ...string) *Validator{{ .Name }}[T] {
 	return &Validator{{ .Name }}[T]{context: NewContext(value, nameAndTitle...)}
 }
@@ -38,7 +38,7 @@ func (validator *Validator{{ .Name }}[T]) Not() *Validator{{ .Name }}[T] {
 }
 
 // EqualTo Validate if the {{ .Type }} value is equal to another. This function internally uses
-// the golang `==` operator.
+// the golang == operator.
 // For example:
 //
 //	quantity := {{ .Type }}(2)
@@ -50,7 +50,7 @@ func (validator *Validator{{ .Name }}[T]) EqualTo(value T, template ...string) *
 			if !ok {
 				return false
 			}
-			
+
 			return is{{ .Name }}EqualTo(val, value)
 		},
 		ErrorKeyEqualTo, value, template...)
@@ -59,7 +59,7 @@ func (validator *Validator{{ .Name }}[T]) EqualTo(value T, template ...string) *
 }
 
 // GreaterThan Validate if the {{ .Type }} value is greater than another. This function internally
-// uses the golang `>` operator.
+// uses the golang > operator.
 // For example:
 //
 //	quantity := {{ .Type }}(3)
@@ -80,7 +80,7 @@ func (validator *Validator{{ .Name }}[T]) GreaterThan(value T, template ...strin
 }
 
 // GreaterOrEqualTo Validate if the {{ .Type }} value is greater than or equal to another. This function
-// internally uses the golang `>=` operator.
+// internally uses the golang >= operator.
 // For example:
 //
 //	quantity := {{ .Type }}(3)
@@ -101,7 +101,7 @@ func (validator *Validator{{ .Name }}[T]) GreaterOrEqualTo(value T, template ...
 }
 
 // LessThan Validate if the {{ .Type }} value is less than another. This function internally
-// uses the golang `<` operator.
+// uses the golang < operator.
 // For example:
 //
 //	quantity := {{ .Type }}(2)
@@ -122,7 +122,7 @@ func (validator *Validator{{ .Name }}[T]) LessThan(value T, template ...string) 
 }
 
 // LessOrEqualTo Validate if the {{ .Type }} value is less than or equal to another. This function
-// internally uses the golang `<=` operator.
+// internally uses the golang <= operator.
 // For example:
 //
 //	quantity := {{ .Type }}(2)
@@ -134,7 +134,7 @@ func (validator *Validator{{ .Name }}[T]) LessOrEqualTo(value T, template ...str
 			if !ok {
 				return false
 			}
-		
+
 			return is{{ .Name }}LessOrEqualTo(val, value)
 		},
 		ErrorKeyLessOrEqualTo, value, template...)
@@ -175,7 +175,7 @@ func (validator *Validator{{ .Name }}[T]) Zero(template ...string) *Validator{{ 
 			if !ok {
 				return false
 			}
-			
+
 			return is{{ .Name }}Zero(val)
 		},
 		ErrorKeyZero, template...)
@@ -197,7 +197,7 @@ func (validator *Validator{{ .Name }}[T]) Passing(function func(v T) bool, templ
 			if !ok {
 				return false
 			}
-			
+
 			return function(val)
 		},
 		ErrorKeyPassing, template...)
