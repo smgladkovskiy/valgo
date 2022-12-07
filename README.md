@@ -579,6 +579,8 @@ Uint32(v uint32)   Uint32P(v *uint32)
 Uint64(v uint64)   Uint64P(v *uint64)
 Float32(v float32) Float32P(v *float32)
 Float64(v float64) Float64P(v *float64)
+Byte(v byte)       ByteP(v *byte)
+Rune(v rune)       RuneP(v *rune)
 ```
 
 These validators have the same rule functions as the `Number` validator.
@@ -851,8 +853,8 @@ PRs are welcome if you want to add locale messages for your language, but please
   - `MatchingTo`
   - `MaxLength`
   - `MinLength`
-  - `Length`
-  - `LengthBetween`
+  - `OfLength`
+  - `OfLengthBetween`
 
 - `StringP` validator - for string pointer
   - `EqualTo`
@@ -868,8 +870,8 @@ PRs are welcome if you want to add locale messages for your language, but please
   - `MatchingTo`
   - `MaxLength`
   - `MinLength`
-  - `Length`
-  - `LengthBetween`
+  - `OfLength`
+  - `OfLengthBetween`
   - `BlankOrNil`
   - `EmptyOrNil`
   - `Nil`
@@ -921,9 +923,14 @@ PRs are welcome if you want to add locale messages for your language, but please
 
 # Contributing
 
-Before push check your changes by running `make lint` command and do your best to satisfy linter.
+* Consider making small commits with high cohesiveness.
 
-To test package code run `make tests`.
+* Before push check your changes by running `make lint` command and do your best to satisfy linter.
+
+> On Mac OS, you are getting `Can't run linter goanalysis_metalinter: gofmt: can't extract issues from gofmt diff output` error?
+> Try running: `brew install diffutils` to fix the problem.
+
+* To test package code run `make tests`.
 
 # License
 
