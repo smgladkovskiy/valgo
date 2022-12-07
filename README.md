@@ -78,7 +78,7 @@ Valgo is used in production by [Statsignal](https://statsignal.dev), but we want
   - [Extending Valgo with custom validators](#extending-valgo-with-custom-validators)
 - [Localizing validator messages](#localizing-validator-messages)
 - [List of rules by validator type](#list-of-rules-by-validator-type)
-- [Contributing](#Contributing)
+- [Contributing](#contributing)
 - [License](#license)
 
 # Getting started
@@ -921,8 +921,7 @@ PRs are welcome if you want to add locale messages for your language, but please
 
 # Contributing
 
-Before push check your changes by running `make lint` command and do your best 
-to satisfy linter.
+Before push check your changes by running `make lint` command and do your best to satisfy linter.
 
 To test package code run `make tests`.
 
