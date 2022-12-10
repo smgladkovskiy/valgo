@@ -10,60 +10,45 @@ import (
 
 func TestDefaultLocalization(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
 
-	err := valgo.SetDefaultLocale("es")
+	v, err := valgo.New(valgo.WithDefaultLocale(valgo.LocaleCodeEs))
 	require.NoError(t, err)
 
-	v := valgo.Is(valgo.String(" ").Not().Blank())
-	assert.Contains(t, v.ErrorByKey("value_0").Messages(), "Value 0 no puede estar en blanco")
+	result := v.Validate().Is(valgo.String(" ").Not().Blank())
+	assert.Contains(t, result.ErrorByKey("value_0").Messages(), "Value 0 no puede estar en blanco")
 
 	// Default localization must be persistent
-	v = valgo.Is(valgo.String(" ").Empty())
-	assert.Contains(t, v.ErrorByKey("value_0").Messages(), "Value 0 debe estar vacío")
+	result = v.Validate().Is(valgo.String(" ").Empty())
+	assert.Contains(t, result.ErrorByKey("value_0").Messages(), "Value 0 debe estar vacío")
 }
 
 func TestSeparatedLocalization(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
 
-	err := valgo.SetDefaultLocale("en")
-	assert.NoError(t, err)
+	v, err := valgo.New(valgo.WithDefaultLocale(valgo.LocaleCodeEn)) // Default localization is English
+	require.NoError(t, err)
 
-	localized, err := valgo.Localized("es")
-	assert.NoError(t, err)
-
-	v := localized.New().Check(valgo.String(" ", "my_value").Not().Blank().Empty())
-	assert.Contains(t, v.ErrorByKey("my_value").Messages(), "My value no puede estar en blanco")
-	assert.Contains(t, v.ErrorByKey("my_value").Messages(), "My value debe estar vacío")
+	result := v.ValidateForLocale(valgo.LocaleCodeEs).Check(valgo.String(" ", "my_value").Not().Blank().Empty())
+	assert.Contains(t, result.ErrorByKey("my_value").Messages(), "My value no puede estar en blanco")
+	assert.Contains(t, result.ErrorByKey("my_value").Messages(), "My value debe estar vacío")
 
 	// Default localization must not be changed
-	v = valgo.Is(valgo.String(" ").Not().Blank())
+	v = v.Validate().Is(valgo.String(" ").Not().Blank())
 	assert.Contains(t, v.ErrorByKey("value_0").Messages(), "Value 0 can't be blank")
 }
 
 func TestAddLocalization(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
 
-	err := valgo.SetDefaultLocale("en")
-	assert.NoError(t, err)
+	l := valgo.NewLocale("ee", map[string]string{valgo.ErrorKeyNotBlank: "{{title}} ei tohi olla tühi"})
 
-	messages, err := valgo.GetLocaleMessages("en")
-	assert.NoError(t, err)
+	v, err := valgo.New(valgo.WithLocale(l, false))
+	require.NoError(t, err)
 
-	messages[valgo.ErrorKeyNotBlank] = "{{title}} ei tohi olla tühi"
-
-	valgo.SetLocaleMessages("ee", messages)
-	assert.NoError(t, err)
-
-	localized, err := valgo.Localized("ee")
-	assert.NoError(t, err)
-
-	v := localized.New().Check(valgo.String(" ", "my_value").Not().Blank())
-	assert.Contains(t, v.ErrorByKey("my_value").Messages(), "My value ei tohi olla tühi")
+	result := v.ValidateForLocale("ee").Check(valgo.String(" ", "my_value").Not().Blank())
+	assert.Contains(t, result.ErrorByKey("my_value").Messages(), "My value ei tohi olla tühi")
 
 	// Default localization must not be changed
-	v = valgo.Is(valgo.String(" ").Not().Blank())
-	assert.Contains(t, v.ErrorByKey("value_0").Messages(), "Value 0 can't be blank")
+	result = v.Validate().Is(valgo.String(" ").Not().Blank())
+	assert.Contains(t, result.ErrorByKey("value_0").Messages(), "Value 0 can't be blank")
 }

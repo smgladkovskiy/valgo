@@ -1,5 +1,5 @@
 gen:
-
+	go run generator/main.go
 
 # ----
 ## LINTER stuff start

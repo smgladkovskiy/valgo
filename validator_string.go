@@ -1,3 +1,4 @@
+//nolint:forcetypeassert // Don't need check assertions because it is guaranteed type by signature of initiating function
 package valgo
 
 import (
@@ -51,12 +52,7 @@ func (validator *ValidatorString[T]) Not() *ValidatorString[T] {
 func (validator *ValidatorString[T]) EqualTo(value T, template ...string) *ValidatorString[T] {
 	validator.context.AddWithValue(
 		func() bool {
-			val, ok := validator.context.Value().(T)
-			if !ok {
-				return false
-			}
-
-			return isStringEqualTo(val, value)
+			return isStringEqualTo(validator.context.Value().(T), value)
 		},
 		ErrorKeyEqualTo, value, template...)
 
@@ -72,12 +68,7 @@ func (validator *ValidatorString[T]) EqualTo(value T, template ...string) *Valid
 func (validator *ValidatorString[T]) GreaterThan(value T, template ...string) *ValidatorString[T] {
 	validator.context.AddWithValue(
 		func() bool {
-			val, ok := validator.context.Value().(T)
-			if !ok {
-				return false
-			}
-
-			return isStringGreaterThan(val, value)
+			return isStringGreaterThan(validator.context.Value().(T), value)
 		},
 		ErrorKeyGreaterThan, value, template...)
 
@@ -93,12 +84,7 @@ func (validator *ValidatorString[T]) GreaterThan(value T, template ...string) *V
 func (validator *ValidatorString[T]) GreaterOrEqualTo(value T, template ...string) *ValidatorString[T] {
 	validator.context.AddWithValue(
 		func() bool {
-			val, ok := validator.context.Value().(T)
-			if !ok {
-				return false
-			}
-
-			return isStringGreaterOrEqualTo(val, value)
+			return isStringGreaterOrEqualTo(validator.context.Value().(T), value)
 		},
 		ErrorKeyGreaterOrEqualTo, value, template...)
 
@@ -114,12 +100,7 @@ func (validator *ValidatorString[T]) GreaterOrEqualTo(value T, template ...strin
 func (validator *ValidatorString[T]) LessThan(value T, template ...string) *ValidatorString[T] {
 	validator.context.AddWithValue(
 		func() bool {
-			val, ok := validator.context.Value().(T)
-			if !ok {
-				return false
-			}
-
-			return isStringLessThan(val, value)
+			return isStringLessThan(validator.context.Value().(T), value)
 		},
 		ErrorKeyLessThan, value, template...)
 
@@ -135,12 +116,7 @@ func (validator *ValidatorString[T]) LessThan(value T, template ...string) *Vali
 func (validator *ValidatorString[T]) LessOrEqualTo(value T, template ...string) *ValidatorString[T] {
 	validator.context.AddWithValue(
 		func() bool {
-			val, ok := validator.context.Value().(T)
-			if !ok {
-				return false
-			}
-
-			return isStringLessOrEqualTo(val, value)
+			return isStringLessOrEqualTo(validator.context.Value().(T), value)
 		},
 		ErrorKeyLessOrEqualTo, value, template...)
 
@@ -159,12 +135,7 @@ func (validator *ValidatorString[T]) LessOrEqualTo(value T, template ...string) 
 func (validator *ValidatorString[T]) Empty(template ...string) *ValidatorString[T] {
 	validator.context.Add(
 		func() bool {
-			val, ok := validator.context.Value().(T)
-			if !ok {
-				return false
-			}
-
-			return isStringEmpty(val)
+			return isStringEmpty(validator.context.Value().(T))
 		},
 		ErrorKeyEmpty, template...)
 
@@ -180,12 +151,7 @@ func (validator *ValidatorString[T]) Empty(template ...string) *ValidatorString[
 func (validator *ValidatorString[T]) Blank(template ...string) *ValidatorString[T] {
 	validator.context.Add(
 		func() bool {
-			val, ok := validator.context.Value().(T)
-			if !ok {
-				return false
-			}
-
-			return isStringBlank(val)
+			return isStringBlank(validator.context.Value().(T))
 		},
 		ErrorKeyBlank, template...)
 
@@ -202,12 +168,7 @@ func (validator *ValidatorString[T]) Blank(template ...string) *ValidatorString[
 func (validator *ValidatorString[T]) Passing(function func(v0 T) bool, template ...string) *ValidatorString[T] {
 	validator.context.Add(
 		func() bool {
-			val, ok := validator.context.Value().(T)
-			if !ok {
-				return false
-			}
-
-			return function(val)
+			return function(validator.context.Value().(T))
 		},
 		ErrorKeyPassing, template...)
 
@@ -223,12 +184,7 @@ func (validator *ValidatorString[T]) Passing(function func(v0 T) bool, template 
 func (validator *ValidatorString[T]) InSlice(slice []T, template ...string) *ValidatorString[T] {
 	validator.context.AddWithValue(
 		func() bool {
-			val, ok := validator.context.Value().(T)
-			if !ok {
-				return false
-			}
-
-			return isStringInSlice(val, slice)
+			return isStringInSlice(validator.context.Value().(T), slice)
 		},
 		ErrorKeyInSlice, validator.context.Value(), template...)
 
@@ -244,12 +200,7 @@ func (validator *ValidatorString[T]) InSlice(slice []T, template ...string) *Val
 func (validator *ValidatorString[T]) MatchingTo(regex *regexp.Regexp, template ...string) *ValidatorString[T] {
 	validator.context.AddWithParams(
 		func() bool {
-			val, ok := validator.context.Value().(T)
-			if !ok {
-				return false
-			}
-
-			return isStringMatchingTo(val, regex)
+			return isStringMatchingTo(validator.context.Value().(T), regex)
 		},
 		ErrorKeyMatchingTo,
 		map[string]any{"title": validator.context.title, "regexp": regex},
@@ -266,12 +217,7 @@ func (validator *ValidatorString[T]) MatchingTo(regex *regexp.Regexp, template .
 func (validator *ValidatorString[T]) MaxLength(length int, template ...string) *ValidatorString[T] {
 	validator.context.AddWithParams(
 		func() bool {
-			val, ok := validator.context.Value().(T)
-			if !ok {
-				return false
-			}
-
-			return isStringMaxLength(val, length)
+			return isStringMaxLength(validator.context.Value().(T), length)
 		},
 		ErrorKeyMaxLength,
 		map[string]any{"title": validator.context.title, "length": length},
@@ -288,12 +234,7 @@ func (validator *ValidatorString[T]) MaxLength(length int, template ...string) *
 func (validator *ValidatorString[T]) MinLength(length int, template ...string) *ValidatorString[T] {
 	validator.context.AddWithParams(
 		func() bool {
-			val, ok := validator.context.Value().(T)
-			if !ok {
-				return false
-			}
-
-			return isStringMinLength(val, length)
+			return isStringMinLength(validator.context.Value().(T), length)
 		},
 		ErrorKeyMinLength,
 		map[string]any{"title": validator.context.title, "length": length},
@@ -310,12 +251,7 @@ func (validator *ValidatorString[T]) MinLength(length int, template ...string) *
 func (validator *ValidatorString[T]) OfLength(length int, template ...string) *ValidatorString[T] {
 	validator.context.AddWithParams(
 		func() bool {
-			val, ok := validator.context.Value().(T)
-			if !ok {
-				return false
-			}
-
-			return isStringLength(val, length)
+			return isStringLength(validator.context.Value().(T), length)
 		},
 		ErrorKeyLength,
 		map[string]any{"title": validator.context.title, "length": length},
@@ -332,12 +268,7 @@ func (validator *ValidatorString[T]) OfLength(length int, template ...string) *V
 func (validator *ValidatorString[T]) OfLengthBetween(min int, max int, template ...string) *ValidatorString[T] {
 	validator.context.AddWithParams(
 		func() bool {
-			val, ok := validator.context.Value().(T)
-			if !ok {
-				return false
-			}
-
-			return isStringLengthBetween(val, min, max)
+			return isStringLengthBetween(validator.context.Value().(T), min, max)
 		},
 		ErrorKeyLengthBetween,
 		map[string]any{"title": validator.context.title, "min": min, "max": max},
@@ -354,12 +285,7 @@ func (validator *ValidatorString[T]) OfLengthBetween(min int, max int, template 
 func (validator *ValidatorString[T]) Between(min T, max T, template ...string) *ValidatorString[T] {
 	validator.context.AddWithParams(
 		func() bool {
-			val, ok := validator.context.Value().(T)
-			if !ok {
-				return false
-			}
-
-			return isStringBetween(val, min, max)
+			return isStringBetween(validator.context.Value().(T), min, max)
 		},
 		ErrorKeyBetween,
 		map[string]any{"title": validator.context.title, "min": min, "max": max},

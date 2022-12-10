@@ -27,13 +27,28 @@ import (
 // validations. When [Is](...) is called, the function creates a validation and
 // receives a validator at the same time.
 type Validation struct {
-	valid bool
+	localization          *localization
+	customMarshalJSONFunc func(e *Error) ([]byte, error)
 
-	_locale      *locale
-	errors       map[string]*valueError
+	valid        bool
 	currentIndex int
+	errors       map[string]ValueErrorInterface
 
-	sync.RWMutex
+	mu sync.RWMutex
+}
+
+func (v *Validation) Validate() *Validation {
+	return v.clear()
+}
+
+func (v *Validation) ValidateForLocale(code LocaleCode) *Validation {
+	newV := v.clone()
+	newV.clear()
+
+	//nolint:errcheck // suppose that it will not be any error here
+	_ = newV.localization.SetDefaultLocaleCode(code)
+
+	return newV
 }
 
 // Is Add a field validator to a [Validation] session.
@@ -83,13 +98,13 @@ func (v *Validation) Merge(_validation *Validation) *Validation {
 func (v *Validation) merge(prefix string, _validation *Validation) *Validation {
 	var _prefix string
 	if len(strings.TrimSpace(prefix)) > 0 {
-		_prefix = prefix + "."
+		_prefix = concatString(prefix, ".")
 	}
 
 LOOP1:
-	for _field, _err := range _validation.Errors() {
-		for field, err := range v.Errors() {
-			if _prefix+_field == field {
+	for _field, _err := range _validation.errors {
+		for field, err := range v.errors {
+			if concatString(_prefix, _field) == field {
 			LOOP2:
 				for _, _errMsg := range _err.Messages() {
 					for _, errMsg := range err.Messages() {
@@ -97,7 +112,7 @@ LOOP1:
 							continue LOOP2
 						}
 					}
-					v.AddErrorMessage(_prefix+_field, _errMsg)
+					v.AddErrorMessage(concatString(_prefix, _field), _errMsg)
 				}
 
 				continue LOOP1
@@ -105,7 +120,7 @@ LOOP1:
 		}
 
 		for _, _errMsg := range _err.Messages() {
-			v.AddErrorMessage(_prefix+_field, _errMsg)
+			v.AddErrorMessage(concatString(_prefix, _field), _errMsg)
 		}
 	}
 
@@ -117,21 +132,20 @@ LOOP1:
 // marked as invalid.
 func (v *Validation) AddErrorMessage(name string, message string) *Validation {
 	if v.errors == nil {
-		v.errors = map[string]*valueError{}
+		v.errors = make(map[string]ValueErrorInterface)
 	}
 
 	v.valid = false
 
 	ev := v.getOrCreateValueError(name)
-
-	ev.errorMessages = append(ev.errorMessages, message)
+	ev.AddErrorMessage(message)
 
 	return v
 }
 
 func (v *Validation) invalidate(name *string, fragment *validatorFragment) {
 	if v.errors == nil {
-		v.errors = map[string]*valueError{}
+		v.errors = make(map[string]ValueErrorInterface)
 	}
 
 	v.valid = false
@@ -151,36 +165,30 @@ func (v *Validation) invalidate(name *string, fragment *validatorFragment) {
 		errorKey = concatString("not_", errorKey)
 	}
 
-	if _, ok := ev.errorTemplates[errorKey]; !ok {
-		ev.errorTemplates[errorKey] = &errorTemplate{
-			key: errorKey,
-		}
-	}
+	et := ev.ErrorTemplateByKey(errorKey)
 
-	et := ev.errorTemplates[errorKey]
 	if len(fragment.template) > 0 {
-		et.template = &fragment.template[0]
+		et.SetTemplate(fragment.template[0])
 	}
 
-	et.params = fragment.templateParams
+	for k, p := range fragment.templateParams {
+		et.SetParam(k, p)
+	}
 }
 
-// Errors Return a map with the information for each invalid field validator in the
-// [Validation] session.
-//
-//nolint:revive // by design. should be exported as can be annoying to use
-func (v *Validation) Errors() map[string]*valueError {
-	return v.errors
+// ErrorsCount Return length of the errors map.
+func (v *Validation) ErrorsCount() int {
+	return len(v.errors)
 }
 
 // ErrorByKey Return a map with the information for each invalid field validator in the
 // [Validation] session.
 //
-//nolint:revive // by design. should be exported as can be annoying to use
-func (v *Validation) ErrorByKey(key string) *valueError {
-	v.RLock()
+//nolint:ireturn,nolintlint // Interface need to be returned here
+func (v *Validation) ErrorByKey(key string) ValueErrorInterface {
+	v.mu.RLock()
 	err := v.errors[key]
-	v.RUnlock()
+	v.mu.RUnlock()
 
 	return err
 }
@@ -192,7 +200,7 @@ func (v *Validation) Error() error {
 		return nil
 	}
 
-	return &Error{errors: v.errors}
+	return &Error{customMarshalJSONFunc: v.customMarshalJSONFunc, errors: v.errors}
 }
 
 // IsValid Return true if a specific field validator is valid.
@@ -204,27 +212,54 @@ func (v *Validation) IsValid(name string) bool {
 	return true
 }
 
-func (v *Validation) getOrCreateValueError(name string) *valueError {
+//nolint:ireturn,nolintlint // Interface need to be returned here
+func (v *Validation) getOrCreateValueError(name string) ValueErrorInterface {
+	v.mu.Lock()
 	if _, ok := v.errors[name]; !ok {
+		l, _ := v.localization.GetDefaultLocale() //nolint:errcheck // We are pretty sure that it will not be any error here
 		v.errors[name] = &valueError{
 			name:           &name,
-			errorTemplates: map[string]*errorTemplate{},
+			errorTemplates: map[string]ErrorTemplateInterface{},
 			errorMessages:  []string{},
-			validator:      v,
+			locale:         l,
 		}
 	}
+	v.mu.Unlock()
 
 	ev := v.errors[name]
-	ev.dirty = true
+	ev.IsDirty(true)
 
 	return ev
 }
 
-func newValidation(_locale *locale) *Validation {
-	v := &Validation{
-		valid:   true,
-		_locale: _locale,
-	}
+//nolint:govet // The linter is deliberately ignored with a full understanding of how mutex works in this case.
+func (v *Validation) clone() *Validation {
+	v.mu.Lock()
+
+	l := *v.localization
+	newV := *v
+	newV.localization = &l
+
+	v.mu.Unlock()
+
+	newV.mu = sync.RWMutex{}
+
+	return &newV
+}
+
+//nolint:ireturn,nolintlint // Interface need to be returned here
+func (v *Validation) GetDefaultLocale() (LocaleInterface, error) {
+	return v.localization.GetDefaultLocale()
+}
+
+func (v *Validation) clear() *Validation {
+	v.mu.Lock()
+
+	v.valid = true
+	v.currentIndex = 0
+	v.errors = nil
+
+	v.mu.Unlock()
 
 	return v
 }

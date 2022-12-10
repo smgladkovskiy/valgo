@@ -26,12 +26,11 @@ func NewContext(value any, nameAndTitle ...string) *ValidatorContext {
 		boolOperation: true,
 	}
 
-	sizeNameAndTitle := len(nameAndTitle)
-	if sizeNameAndTitle > 0 {
+	if len(nameAndTitle) > 0 {
 		name := nameAndTitle[0]
 		context.name = &name
 
-		if sizeNameAndTitle > 1 {
+		if len(nameAndTitle) > 1 {
 			title := nameAndTitle[1]
 			context.title = &title
 		}
@@ -83,7 +82,7 @@ func (ctx *ValidatorContext) AddWithParams(
 	}
 
 	if len(template) > 0 {
-		fragment.template = template
+		fragment.template = append(fragment.template, template...)
 	}
 
 	ctx.fragments = append(ctx.fragments, fragment)

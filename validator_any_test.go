@@ -11,43 +11,53 @@ import (
 func TestValidatorAnyNot(t *testing.T) {
 	t.Parallel()
 
-	v := valgo.Is(valgo.Any(10).Not().EqualTo(11))
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Any(10).Not().EqualTo(11))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 }
 
 func TestValidatorAnyEqualToValid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
 
-	var v *valgo.Validation
+	v, err := valgo.New()
+	require.NoError(t, err)
 
-	v = valgo.Is(valgo.Any(10).EqualTo(10))
+	v.Validate().Is(valgo.Any(10).EqualTo(10))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 
 	type X struct{ Value int }
 	x := X{Value: 10}
 	y := X{Value: 10}
-	v = valgo.Is(valgo.Any(x).EqualTo(y))
+
+	v, err = valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Any(x).EqualTo(y))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 
 	var a *int
 	var b *int
 
-	v = valgo.Is(valgo.Any(a).EqualTo(b))
+	v, err = valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Any(a).EqualTo(b))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 }
 
 func TestValidatorAnyEqualToInvalid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
 
-	var v *valgo.Validation
+	v, err := valgo.New()
+	require.NoError(t, err)
 
-	v = valgo.Is(valgo.Any(11).EqualTo(10))
+	v.Validate().Is(valgo.Any(11).EqualTo(10))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be equal to \"10\"",
@@ -56,13 +66,20 @@ func TestValidatorAnyEqualToInvalid(t *testing.T) {
 	type X struct{ Value int }
 	x := X{Value: 10}
 	y := X{Value: 11}
-	v = valgo.Is(valgo.Any(x).EqualTo(y))
+
+	v, err = valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Any(x).EqualTo(y))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be equal to \"{11}\"",
 		v.ErrorByKey("value_0").Messages()[0])
 
-	v = valgo.Is(valgo.Any(10).EqualTo(nil))
+	v, err = valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Any(10).EqualTo(nil))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be equal to \"<nil>\"",
@@ -72,7 +89,10 @@ func TestValidatorAnyEqualToInvalid(t *testing.T) {
 	var a *int
 	var b *int64
 
-	v = valgo.Is(valgo.Any(a).EqualTo(b))
+	v, err = valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Any(a).EqualTo(b))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be equal to \"<nil>\"",
@@ -81,29 +101,33 @@ func TestValidatorAnyEqualToInvalid(t *testing.T) {
 
 func TestValidatorAnyNilValid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-
-	var v *valgo.Validation
 
 	var a *int
-	v = valgo.Is(valgo.Any(a).Nil())
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Any(a).Nil())
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 
 	type X struct{}
 	var x *X
-	v = valgo.Is(valgo.Any(x).Nil())
+
+	v, err = valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Any(x).Nil())
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 }
 
 func TestValidatorAnyNilInvalid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
 
-	var v *valgo.Validation
+	v, err := valgo.New()
+	require.NoError(t, err)
 
-	v = valgo.Is(valgo.Any(0).Nil())
+	v.Validate().Is(valgo.Any(0).Nil())
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be nil",
@@ -112,7 +136,10 @@ func TestValidatorAnyNilInvalid(t *testing.T) {
 	type X struct{}
 	x := X{}
 
-	v = valgo.Is(valgo.Any(&x).Nil())
+	v, err = valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Any(&x).Nil())
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be nil",
@@ -121,28 +148,28 @@ func TestValidatorAnyNilInvalid(t *testing.T) {
 
 func TestValidatorAnyPassingValid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-
-	var v *valgo.Validation
 
 	valTen := 10
 
-	v = valgo.Is(valgo.Any(valTen).Passing(func(val any) bool {
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Any(valTen).Passing(func(val any) bool {
 		return val == 10
 	}))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 }
 
 func TestValidatorAnyPassingInvalid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-
-	var v *valgo.Validation
 
 	valTen := 10
 
-	v = valgo.Is(valgo.Any(valTen).Passing(func(val any) bool {
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Any(valTen).Passing(func(val any) bool {
 		return val == 9
 	}))
 	assert.False(t, v.Valid())

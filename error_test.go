@@ -14,34 +14,42 @@ func TestNotError(t *testing.T) {
 	t.Parallel()
 
 	for _, value := range []string{"", " "} {
-		v := valgo.Is(valgo.String(value).Blank())
-		assert.True(t, v.Valid())
-		assert.NoError(t, v.Error())
+		v, err := valgo.New()
+		require.NoError(t, err)
+
+		result := v.Validate().Is(valgo.String(value).Blank())
+		assert.True(t, result.Valid())
+		assert.NoError(t, result.Error())
 	}
 }
 
 func TestError(t *testing.T) {
 	t.Parallel()
 
-	v := valgo.Is(valgo.String("Vitalik Buterin").Blank())
-	assert.False(t, v.Valid())
-	assert.Error(t, v.Error())
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	result := v.Validate().Is(valgo.String("Vitalik Buterin").Blank())
+	assert.False(t, result.Valid())
+	assert.Error(t, result.Error())
 }
 
 func TestAddErrorMessageFromValidator(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
 
-	v := valgo.Is(valgo.String("Vitalik Buterin", "name").Blank())
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.String("Vitalik Buterin", "name").Blank())
 
 	assert.False(t, v.Valid())
-	assert.Len(t, v.Errors(), 1)
+	assert.Equal(t, v.ErrorsCount(), 1)
 	assert.Len(t, v.ErrorByKey("name").Messages(), 1)
 	assert.Contains(t, v.ErrorByKey("name").Messages(), "Name must be blank")
 
 	v.AddErrorMessage("email", "Email is invalid")
 
-	assert.Len(t, v.Errors(), 2)
+	assert.Equal(t, v.ErrorsCount(), 2)
 	assert.False(t, v.Valid())
 	assert.Len(t, v.ErrorByKey("name").Messages(), 1)
 	assert.Len(t, v.ErrorByKey("email").Messages(), 1)
@@ -49,34 +57,36 @@ func TestAddErrorMessageFromValidator(t *testing.T) {
 	assert.Contains(t, v.ErrorByKey("email").Messages(), "Email is invalid")
 }
 
-func TestAddErrorMessageFromValgo(t *testing.T) {
-	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-
-	v := valgo.AddErrorMessage("email", "Email is invalid")
-
-	assert.False(t, v.Valid())
-	assert.Len(t, v.Errors(), 1)
-	assert.Len(t, v.ErrorByKey("email").Messages(), 1)
-	assert.Contains(t, v.ErrorByKey("email").Messages(), "Email is invalid")
-
-	v.Is(valgo.String("Vitalik Buterin", "name").Blank())
-
-	assert.Len(t, v.Errors(), 2)
-	assert.False(t, v.Valid())
-	assert.Len(t, v.ErrorByKey("email").Messages(), 1)
-	assert.Len(t, v.ErrorByKey("name").Messages(), 1)
-	assert.Contains(t, v.ErrorByKey("email").Messages(), "Email is invalid")
-	assert.Contains(t, v.ErrorByKey("name").Messages(), "Name must be blank")
-}
+// func TestAddErrorMessageFromValgo(t *testing.T) {
+//	t.Parallel()
+//
+//	v := valgo.AddErrorMessage("email", "Email is invalid")
+//
+//	assert.False(t, v.Valid())
+//	assert.Equal(t, v.ErrorsCount(), 1)
+//	assert.Len(t, v.ErrorByKey("email").Messages(), 1)
+//	assert.Contains(t, v.ErrorByKey("email").Messages(), "Email is invalid")
+//
+//	v.Is(valgo.String("Vitalik Buterin", "name").Blank())
+//
+//	assert.Equal(t, v.ErrorsCount(), 2)
+//	assert.False(t, v.Valid())
+//	assert.Len(t, v.ErrorByKey("email").Messages(), 1)
+//	assert.Len(t, v.ErrorByKey("name").Messages(), 1)
+//	assert.Contains(t, v.ErrorByKey("email").Messages(), "Email is invalid")
+//	assert.Contains(t, v.ErrorByKey("name").Messages(), "Name must be blank")
+// }
 
 func TestMultipleErrorsInOneFieldWithIs(t *testing.T) {
 	t.Parallel()
 
 	r := regexp.MustCompile("a")
-	v := valgo.Is(valgo.String("", "email").Not().Blank().MatchingTo(r))
+	v, err := valgo.New()
+	require.NoError(t, err)
 
-	assert.Len(t, v.Errors(), 1)
+	v.Validate().Is(valgo.String("", "email").Not().Blank().MatchingTo(r))
+
+	assert.Equal(t, v.ErrorsCount(), 1)
 	assert.False(t, v.Valid())
 	assert.Len(t, v.ErrorByKey("email").Messages(), 1)
 	assert.Contains(t, v.ErrorByKey("email").Messages(), "Email can't be blank")
@@ -86,9 +96,12 @@ func TestMultipleErrorsInOneFieldWithCheck(t *testing.T) {
 	t.Parallel()
 
 	r := regexp.MustCompile("a")
-	v := valgo.Check(valgo.String("", "email").Not().Blank().MatchingTo(r))
+	v, err := valgo.New()
+	require.NoError(t, err)
 
-	assert.Len(t, v.Errors(), 1)
+	v.Validate().Check(valgo.String("", "email").Not().Blank().MatchingTo(r))
+
+	assert.Equal(t, v.ErrorsCount(), 1)
 	assert.False(t, v.Valid())
 	assert.Len(t, v.ErrorByKey("email").Messages(), 2)
 	assert.Contains(t, v.ErrorByKey("email").Messages(), "Email can't be blank")
@@ -99,7 +112,10 @@ func TestErrorMarshallJSONWithIs(t *testing.T) {
 	t.Parallel()
 
 	r := regexp.MustCompile("a")
-	v := valgo.Is(valgo.String("", "email").Not().Blank().MatchingTo(r)).
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.String("", "email").Not().Blank().MatchingTo(r)).
 		Is(valgo.String("", "name").Not().Blank())
 
 	jsonByte, err := json.Marshal(v.Error())
@@ -117,7 +133,10 @@ func TestErrorMarshallJSONWithCheck(t *testing.T) {
 	t.Parallel()
 
 	r := regexp.MustCompile("a")
-	v := valgo.Check(valgo.String("", "email").Not().Blank().MatchingTo(r)).
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Check(valgo.String("", "email").Not().Blank().MatchingTo(r)).
 		Check(valgo.String("", "name").Not().Blank())
 
 	jsonByte, err := json.Marshal(v.Error())
@@ -135,7 +154,10 @@ func TestErrorMarshallJSONWithCheck(t *testing.T) {
 func TestIsValidByName(t *testing.T) {
 	t.Parallel()
 
-	v := valgo.Is(valgo.String("Steve", "firstName").Not().Blank()).
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.String("Steve", "firstName").Not().Blank()).
 		Is(valgo.String("", "lastName").Not().Blank())
 
 	assert.True(t, v.IsValid("firstName"))
@@ -144,10 +166,9 @@ func TestIsValidByName(t *testing.T) {
 
 func TestCustomErrorMarshallJSON(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
 
 	customFunc := func(e *valgo.Error) ([]byte, error) {
-		errors := map[string]interface{}{}
+		errors := make(map[string]any)
 
 		for k, v := range e.Errors() {
 			if len(v.Messages()) == 1 {
@@ -161,17 +182,18 @@ func TestCustomErrorMarshallJSON(t *testing.T) {
 		return json.Marshal(map[string]map[string]interface{}{"errors": errors})
 	}
 
-	valgo.SetMarshalJSON(customFunc)
-
 	r := regexp.MustCompile("a")
 
-	v := valgo.Check(valgo.String("", "email").Not().Blank().MatchingTo(r)).
+	v, err := valgo.New(valgo.WithCustomMarshalJSONFunc(customFunc))
+	require.NoError(t, err)
+
+	v.Validate().Check(valgo.String("", "email").Not().Blank().MatchingTo(r)).
 		Check(valgo.String("", "name").Not().Blank())
 
 	jsonByte, err := json.Marshal(v.Error())
 	assert.NoError(t, err)
 
-	t.Log(string(jsonByte))
+	t.Log("test json", string(jsonByte))
 
 	jsonMap := map[string]map[string]interface{}{}
 	err = json.Unmarshal(jsonByte, &jsonMap)

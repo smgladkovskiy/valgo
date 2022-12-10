@@ -1,3 +1,4 @@
+//nolint:forcetypeassert // Don't need check assertions because it is guaranteed type by signature of initiating function
 package valgo
 
 // ValidatorBoolP The Boolean pointer validator type that keeps its validator context.
@@ -45,12 +46,7 @@ func (validator *ValidatorBoolP[T]) Not() *ValidatorBoolP[T] {
 func (validator *ValidatorBoolP[T]) EqualTo(value T, template ...string) *ValidatorBoolP[T] {
 	validator.context.AddWithValue(
 		func() bool {
-			val, ok := validator.context.Value().(*T)
-			if !ok {
-				return false
-			}
-
-			return val != nil && isBoolEqual(*val, value)
+			return validator.context.Value().(*T) != nil && isBoolEqual(*validator.context.Value().(*T), value)
 		},
 		ErrorKeyEqualTo, value, template...)
 
@@ -65,12 +61,7 @@ func (validator *ValidatorBoolP[T]) EqualTo(value T, template ...string) *Valida
 func (validator *ValidatorBoolP[T]) True(template ...string) *ValidatorBoolP[T] {
 	validator.context.Add(
 		func() bool {
-			val, ok := validator.context.Value().(*T)
-			if !ok {
-				return false
-			}
-
-			return val != nil && isBoolTrue(*val)
+			return validator.context.Value().(*T) != nil && isBoolTrue(*validator.context.Value().(*T))
 		},
 		ErrorKeyTrue, template...)
 
@@ -85,12 +76,7 @@ func (validator *ValidatorBoolP[T]) True(template ...string) *ValidatorBoolP[T] 
 func (validator *ValidatorBoolP[T]) False(template ...string) *ValidatorBoolP[T] {
 	validator.context.Add(
 		func() bool {
-			val, ok := validator.context.Value().(*T)
-			if !ok {
-				return false
-			}
-
-			return val != nil && isBoolFalse(*val)
+			return validator.context.Value().(*T) != nil && isBoolFalse(*validator.context.Value().(*T))
 		},
 		ErrorKeyFalse, template...)
 
@@ -107,12 +93,7 @@ func (validator *ValidatorBoolP[T]) False(template ...string) *ValidatorBoolP[T]
 func (validator *ValidatorBoolP[T]) FalseOrNil(template ...string) *ValidatorBoolP[T] {
 	validator.context.Add(
 		func() bool {
-			val, ok := validator.context.Value().(*T)
-			if !ok {
-				return false
-			}
-
-			return val == nil || isBoolFalse(*val)
+			return validator.context.Value().(*T) == nil || isBoolFalse(*validator.context.Value().(*T))
 		},
 		ErrorKeyFalse, template...)
 
@@ -127,12 +108,7 @@ func (validator *ValidatorBoolP[T]) FalseOrNil(template ...string) *ValidatorBoo
 func (validator *ValidatorBoolP[T]) Nil(template ...string) *ValidatorBoolP[T] {
 	validator.context.Add(
 		func() bool {
-			val, ok := validator.context.Value().(*T)
-			if !ok {
-				return false
-			}
-
-			return val == nil
+			return validator.context.Value().(*T) == nil
 		},
 		ErrorKeyNil, template...)
 
@@ -149,12 +125,7 @@ func (validator *ValidatorBoolP[T]) Nil(template ...string) *ValidatorBoolP[T] {
 func (validator *ValidatorBoolP[T]) Passing(function func(v *T) bool, template ...string) *ValidatorBoolP[T] {
 	validator.context.Add(
 		func() bool {
-			val, ok := validator.context.Value().(*T)
-			if !ok {
-				return false
-			}
-
-			return function(val)
+			return function(validator.context.Value().(*T))
 		},
 		ErrorKeyPassing, template...)
 
@@ -170,12 +141,7 @@ func (validator *ValidatorBoolP[T]) Passing(function func(v *T) bool, template .
 func (validator *ValidatorBoolP[T]) InSlice(slice []T, template ...string) *ValidatorBoolP[T] {
 	validator.context.AddWithValue(
 		func() bool {
-			val, ok := validator.context.Value().(*T)
-			if !ok {
-				return false
-			}
-
-			return val != nil && isBoolInSlice(*val, slice)
+			return validator.context.Value().(*T) != nil && isBoolInSlice(*validator.context.Value().(*T), slice)
 		},
 		ErrorKeyInSlice, validator.context.Value(), template...)
 

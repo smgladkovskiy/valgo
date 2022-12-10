@@ -10,40 +10,44 @@ import (
 
 func TestValidatorNumberNot(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
 
-	v := valgo.Is(valgo.Number(1).Not().EqualTo(2))
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Number(1).Not().EqualTo(2))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 }
 
 func TestValidatorNumberEqualToValid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-	var v *valgo.Validation
 
-	v = valgo.Is(valgo.Number(2).EqualTo(2))
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Number(2).EqualTo(2))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 
 	// Custom Type
 	type MyNumber int
 	var myNumber1 MyNumber = 2
 	var myNumber2 MyNumber = 2
 
-	v = valgo.Is(valgo.Number(myNumber1).EqualTo(myNumber2))
+	v.Validate().Is(valgo.Number(myNumber1).EqualTo(myNumber2))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 }
 
 func TestValidatorNumberEqualToInvalid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-	var v *valgo.Validation
 
-	v = valgo.Is(valgo.Number(1).EqualTo(2))
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Number(1).EqualTo(2))
 	assert.False(t, v.Valid())
-	assert.NotEmpty(t, v.Errors())
+	assert.NotEmpty(t, v.ErrorsCount())
 	assert.Equal(t,
 		"Value 0 must be equal to \"2\"",
 		v.ErrorByKey("value_0").Messages()[0])
@@ -53,9 +57,9 @@ func TestValidatorNumberEqualToInvalid(t *testing.T) {
 	var myNumber1 MyNumber = 1
 	var myNumber2 MyNumber = 2
 
-	v = valgo.Is(valgo.Number(myNumber1).EqualTo(myNumber2))
+	v.Validate().Is(valgo.Number(myNumber1).EqualTo(myNumber2))
 	assert.False(t, v.Valid())
-	assert.NotEmpty(t, v.Errors())
+	assert.NotEmpty(t, v.ErrorsCount())
 	assert.Equal(t,
 		"Value 0 must be equal to \"2\"",
 		v.ErrorByKey("value_0").Messages()[0])
@@ -63,35 +67,37 @@ func TestValidatorNumberEqualToInvalid(t *testing.T) {
 
 func TestValidatorNumberGreaterThanValid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-	var v *valgo.Validation
 
-	v = valgo.Is(valgo.Number(3).GreaterThan(2))
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Number(3).GreaterThan(2))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 
 	// Custom Type
 	type MyNumber int
 	var myNumber1 MyNumber = 3
 	var myNumber2 MyNumber = 2
 
-	v = valgo.Is(valgo.Number(myNumber1).GreaterThan(myNumber2))
+	v.Validate().Is(valgo.Number(myNumber1).GreaterThan(myNumber2))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 }
 
 func TestValidatorNumberGreaterThanInvalid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-	var v *valgo.Validation
 
-	v = valgo.Is(valgo.Number(2).GreaterThan(2))
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Number(2).GreaterThan(2))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be greater than \"2\"",
 		v.ErrorByKey("value_0").Messages()[0])
 
-	v = valgo.Is(valgo.Number(2).GreaterThan(3))
+	v.Validate().Is(valgo.Number(2).GreaterThan(3))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be greater than \"3\"",
@@ -102,7 +108,7 @@ func TestValidatorNumberGreaterThanInvalid(t *testing.T) {
 	var myNumber1 MyNumber = 2
 	var myNumber2 MyNumber = 2
 
-	v = valgo.Is(valgo.Number(myNumber1).GreaterThan(myNumber2))
+	v.Validate().Is(valgo.Number(myNumber1).GreaterThan(myNumber2))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be greater than \"2\"",
@@ -111,33 +117,35 @@ func TestValidatorNumberGreaterThanInvalid(t *testing.T) {
 
 func TestValidatorNumberGreaterOrEqualToValid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-	var v *valgo.Validation
 
-	v = valgo.Is(valgo.Number(2).GreaterOrEqualTo(2))
-	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	v, err := valgo.New()
+	require.NoError(t, err)
 
-	v = valgo.Is(valgo.Number(3).GreaterOrEqualTo(2))
+	v.Validate().Is(valgo.Number(2).GreaterOrEqualTo(2))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
+
+	v.Validate().Is(valgo.Number(3).GreaterOrEqualTo(2))
+	assert.True(t, v.Valid())
+	assert.Empty(t, v.ErrorsCount())
 
 	// Custom Type
 	type MyNumber int
 	var myNumber1 MyNumber = 2
 	var myNumber2 MyNumber = 2
 
-	v = valgo.Is(valgo.Number(myNumber1).GreaterOrEqualTo(myNumber2))
+	v.Validate().Is(valgo.Number(myNumber1).GreaterOrEqualTo(myNumber2))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 }
 
 func TestValidatorNumberGreaterOrEqualToInvalid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-	var v *valgo.Validation
 
-	v = valgo.Is(valgo.Number(2).GreaterOrEqualTo(3))
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Number(2).GreaterOrEqualTo(3))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be greater than or equal to \"3\"",
@@ -148,7 +156,7 @@ func TestValidatorNumberGreaterOrEqualToInvalid(t *testing.T) {
 	var myNumber1 MyNumber = 2
 	var myNumber2 MyNumber = 3
 
-	v = valgo.Is(valgo.Number(myNumber1).GreaterOrEqualTo(myNumber2))
+	v.Validate().Is(valgo.Number(myNumber1).GreaterOrEqualTo(myNumber2))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be greater than or equal to \"3\"",
@@ -157,35 +165,37 @@ func TestValidatorNumberGreaterOrEqualToInvalid(t *testing.T) {
 
 func TestValidatorNumberLessThanValid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-	var v *valgo.Validation
 
-	v = valgo.Is(valgo.Number(2).LessThan(3))
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Number(2).LessThan(3))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 
 	// Custom Type
 	type MyNumber int
 	var myNumber1 MyNumber = 2
 	var myNumber2 MyNumber = 3
 
-	v = valgo.Is(valgo.Number(myNumber1).LessThan(myNumber2))
+	v.Validate().Is(valgo.Number(myNumber1).LessThan(myNumber2))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 }
 
 func TestValidatorNumberLessThanInvalid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-	var v *valgo.Validation
 
-	v = valgo.Is(valgo.Number(2).LessThan(2))
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Number(2).LessThan(2))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be less than \"2\"",
 		v.ErrorByKey("value_0").Messages()[0])
 
-	v = valgo.Is(valgo.Number(3).LessThan(2))
+	v.Validate().Is(valgo.Number(3).LessThan(2))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be less than \"2\"",
@@ -196,7 +206,7 @@ func TestValidatorNumberLessThanInvalid(t *testing.T) {
 	var myNumber1 MyNumber = 2
 	var myNumber2 MyNumber = 2
 
-	v = valgo.Is(valgo.Number(myNumber1).LessThan(myNumber2))
+	v.Validate().Is(valgo.Number(myNumber1).LessThan(myNumber2))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be less than \"2\"",
@@ -205,33 +215,35 @@ func TestValidatorNumberLessThanInvalid(t *testing.T) {
 
 func TestValidatorNumberLessOrEqualToValid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-	var v *valgo.Validation
 
-	v = valgo.Is(valgo.Number(2).LessOrEqualTo(2))
-	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	v, err := valgo.New()
+	require.NoError(t, err)
 
-	v = valgo.Is(valgo.Number(1).LessOrEqualTo(2))
+	v.Validate().Is(valgo.Number(2).LessOrEqualTo(2))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
+
+	v.Validate().Is(valgo.Number(1).LessOrEqualTo(2))
+	assert.True(t, v.Valid())
+	assert.Empty(t, v.ErrorsCount())
 
 	// Custom Type
 	type MyNumber int
 	var myNumber1 MyNumber = 2
 	var myNumber2 MyNumber = 2
 
-	v = valgo.Is(valgo.Number(myNumber1).LessOrEqualTo(myNumber2))
+	v.Validate().Is(valgo.Number(myNumber1).LessOrEqualTo(myNumber2))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 }
 
 func TestValidatorNumberLessOrEqualToInvalid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-	var v *valgo.Validation
 
-	v = valgo.Is(valgo.Number(3).LessOrEqualTo(2))
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Number(3).LessOrEqualTo(2))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be less than or equal to \"2\"",
@@ -242,7 +254,7 @@ func TestValidatorNumberLessOrEqualToInvalid(t *testing.T) {
 	var myNumber1 MyNumber = 3
 	var myNumber2 MyNumber = 2
 
-	v = valgo.Is(valgo.Number(myNumber1).LessOrEqualTo(myNumber2))
+	v.Validate().Is(valgo.Number(myNumber1).LessOrEqualTo(myNumber2))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be less than or equal to \"2\"",
@@ -251,20 +263,21 @@ func TestValidatorNumberLessOrEqualToInvalid(t *testing.T) {
 
 func TestValidatorNumberBetweenValid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-	var v *valgo.Validation
 
-	v = valgo.Is(valgo.Number(2).Between(2, 6))
-	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	v, err := valgo.New()
+	require.NoError(t, err)
 
-	v = valgo.Is(valgo.Number(4).Between(2, 6))
+	v.Validate().Is(valgo.Number(2).Between(2, 6))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 
-	v = valgo.Is(valgo.Number(6).Between(2, 6))
+	v.Validate().Is(valgo.Number(4).Between(2, 6))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
+
+	v.Validate().Is(valgo.Number(6).Between(2, 6))
+	assert.True(t, v.Valid())
+	assert.Empty(t, v.ErrorsCount())
 
 	// Custom Type
 	type MyNumber int
@@ -272,23 +285,24 @@ func TestValidatorNumberBetweenValid(t *testing.T) {
 	var myNumber2 MyNumber = 2
 	var myNumber3 MyNumber = 6
 
-	v = valgo.Is(valgo.Number(myNumber1).Between(myNumber2, myNumber3))
+	v.Validate().Is(valgo.Number(myNumber1).Between(myNumber2, myNumber3))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 }
 
 func TestValidatorNumberBetweenInvalid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-	var v *valgo.Validation
 
-	v = valgo.Is(valgo.Number(2).Between(3, 6))
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Number(2).Between(3, 6))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be between \"3\" and \"6\"",
 		v.ErrorByKey("value_0").Messages()[0])
 
-	v = valgo.Is(valgo.Number(7).Between(3, 6))
+	v.Validate().Is(valgo.Number(7).Between(3, 6))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be between \"3\" and \"6\"",
@@ -300,7 +314,7 @@ func TestValidatorNumberBetweenInvalid(t *testing.T) {
 	var myNumber2 MyNumber = 3
 	var myNumber3 MyNumber = 6
 
-	v = valgo.Is(valgo.Number(myNumber1).Between(myNumber2, myNumber3))
+	v.Validate().Is(valgo.Number(myNumber1).Between(myNumber2, myNumber3))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be between \"3\" and \"6\"",
@@ -309,34 +323,36 @@ func TestValidatorNumberBetweenInvalid(t *testing.T) {
 
 func TestValidatorNumberZeroValid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-	var v *valgo.Validation
 
-	v = valgo.Is(valgo.Number(0).Zero())
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Number(0).Zero())
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 
 	// Custom Type
 	type MyNumber int
 	var myNumber1 MyNumber
 
-	v = valgo.Is(valgo.Number(myNumber1).Zero())
+	v.Validate().Is(valgo.Number(myNumber1).Zero())
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 }
 
 func TestValidatorNumberZeroInvalid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
-	var v *valgo.Validation
 
-	v = valgo.Is(valgo.Number(1).Zero())
+	v, err := valgo.New()
+	require.NoError(t, err)
+
+	v.Validate().Is(valgo.Number(1).Zero())
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be zero",
 		v.ErrorByKey("value_0").Messages()[0])
 
-	v = valgo.Is(valgo.Number(0.1).Zero())
+	v.Validate().Is(valgo.Number(0.1).Zero())
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be zero",
@@ -346,7 +362,7 @@ func TestValidatorNumberZeroInvalid(t *testing.T) {
 	type MyNumber int
 	var myNumber1 MyNumber = 1
 
-	v = valgo.Is(valgo.Number(myNumber1).Zero())
+	v.Validate().Is(valgo.Number(myNumber1).Zero())
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 must be zero",
@@ -355,34 +371,34 @@ func TestValidatorNumberZeroInvalid(t *testing.T) {
 
 func TestValidatorNumberPassingValid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
 
-	var v *valgo.Validation
+	v, err := valgo.New()
+	require.NoError(t, err)
 
-	v = valgo.Is(valgo.Number(1).Passing(func(val int) bool {
+	v.Validate().Is(valgo.Number(1).Passing(func(val int) bool {
 		return val == 1
 	}))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 
 	// Custom Type
 	type MyNumber int
 	var myNumber1 MyNumber = 1
 
-	v = valgo.Is(valgo.Number(myNumber1).Passing(func(val MyNumber) bool {
+	v.Validate().Is(valgo.Number(myNumber1).Passing(func(val MyNumber) bool {
 		return val == 1
 	}))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 }
 
 func TestValidatorNumberPassingInvalid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
 
-	var v *valgo.Validation
+	v, err := valgo.New()
+	require.NoError(t, err)
 
-	v = valgo.Is(valgo.Number(1).Passing(func(val int) bool {
+	v.Validate().Is(valgo.Number(1).Passing(func(val int) bool {
 		return val == 2
 	}))
 	assert.False(t, v.Valid())
@@ -394,7 +410,7 @@ func TestValidatorNumberPassingInvalid(t *testing.T) {
 	type MyNumber int
 	var myNumber1 MyNumber = 1
 
-	v = valgo.Is(valgo.Number(myNumber1).Passing(func(val MyNumber) bool {
+	v.Validate().Is(valgo.Number(myNumber1).Passing(func(val MyNumber) bool {
 		return val == 2
 	}))
 	assert.False(t, v.Valid())
@@ -405,30 +421,30 @@ func TestValidatorNumberPassingInvalid(t *testing.T) {
 
 func TestValidatorNumberInSliceValid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
 
-	var v *valgo.Validation
+	v, err := valgo.New()
+	require.NoError(t, err)
 
-	v = valgo.Is(valgo.Number(2).InSlice([]int{1, 2, 3}))
+	v.Validate().Is(valgo.Number(2).InSlice([]int{1, 2, 3}))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 
 	// Custom Type
 	type MyNumber int
 	var myNumber1 MyNumber = 2
 
-	v = valgo.Is(valgo.Number(myNumber1).InSlice([]MyNumber{1, 2, 3}))
+	v.Validate().Is(valgo.Number(myNumber1).InSlice([]MyNumber{1, 2, 3}))
 	assert.True(t, v.Valid())
-	assert.Empty(t, v.Errors())
+	assert.Empty(t, v.ErrorsCount())
 }
 
 func TestValidatorNumberInSliceInvalid(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
 
-	var v *valgo.Validation
+	v, err := valgo.New()
+	require.NoError(t, err)
 
-	v = valgo.Is(valgo.Number(4).InSlice([]int{1, 2, 3}))
+	v.Validate().Is(valgo.Number(4).InSlice([]int{1, 2, 3}))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 is not valid",
@@ -438,7 +454,7 @@ func TestValidatorNumberInSliceInvalid(t *testing.T) {
 	type MyNumber int
 	var myNumber1 MyNumber = 4
 
-	v = valgo.Is(valgo.Number(myNumber1).InSlice([]MyNumber{1, 2, 3}))
+	v.Validate().Is(valgo.Number(myNumber1).InSlice([]MyNumber{1, 2, 3}))
 	assert.False(t, v.Valid())
 	assert.Equal(t,
 		"Value 0 is not valid",

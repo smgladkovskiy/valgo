@@ -20,7 +20,9 @@ func (validator *ValidatorSecretWord) Correct(template ...string) *ValidatorSecr
 				return false
 			}
 
-			return strVal == "cohesive" || strVal == "stack"
+			check := strVal == "cohesive" || strVal == "stack"
+
+			return check
 		},
 		"not_valid_secret", template...)
 
@@ -33,24 +35,25 @@ func (validator *ValidatorSecretWord) Context() *valgo.ValidatorContext {
 
 func TestCustomValidator(t *testing.T) {
 	t.Parallel()
-	require.NoError(t, TearUpTest(t))
 
-	errorMessages, err := valgo.GetLocaleMessages(valgo.GetDefaultLocaleCode())
+	v, err := valgo.New(valgo.WithDefaultLocale(valgo.LocaleCodeEn))
+	require.NoError(t, err)
+
+	defaultLocale, err := v.GetDefaultLocale()
 	assert.NoError(t, err)
 
-	errorMessages["not_valid_secret"] = "{{title}} is invalid."
-	valgo.SetLocaleMessages(valgo.GetDefaultLocaleCode(), errorMessages)
+	defaultLocale.SetMessage("not_valid_secret", "{{title}} is invalid.")
 
-	v := valgo.Is(SecretWord("loose", "secret").Correct())
+	v.Is(SecretWord("loose", "secret").Correct())
 
 	assert.False(t, v.Valid())
-	assert.Len(t, v.Errors(), 1)
+	assert.Equal(t, v.ErrorsCount(), 1)
 	assert.Len(t, v.ErrorByKey("secret").Messages(), 1)
 	assert.Contains(t, v.ErrorByKey("secret").Messages(), "Secret is invalid.")
 
-	v = valgo.Is(SecretWord("cohesive").Correct())
-	assert.True(t, v.Valid())
-	assert.Len(t, v.Errors(), 0)
+	v2 := v.ValidateForLocale(valgo.LocaleCodeEn).Is(SecretWord("cohesive", "secret").Correct())
+	assert.True(t, v2.Valid())
+	assert.Equal(t, v2.ErrorsCount(), 0)
 }
 
 func SecretWord(value string, nameAndTitle ...string) *ValidatorSecretWord {
